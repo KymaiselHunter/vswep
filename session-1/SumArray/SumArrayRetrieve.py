@@ -25,7 +25,7 @@ class SumArrayRetrieve:
             return False
         
         colCount = len(self.grid[row])
-        if col < 0 or row >= colCount:
+        if col < 0 or col >= colCount:
             return False
         return True
 
