@@ -1,19 +1,36 @@
 #include "Subject.hpp"
+#include <sstream>
 
-void Subject::attach(Observer* observer)
+template <typename T>
+void Subject<T>::attach(Observer* observer)
 {
     observers.insert(observer);
 }
 
-void Subject::detach(Observer* observer)
+template <typename T>
+void Subject<T>::detach(Observer* observer)
 {
     observers.erase(observer);
 }
 
-void Subject::notify(const std::string& messsage)
+template <typename T>
+void Subject<T>::notify(const std::string& message)
 {
-    for(Observer*  observer : observers)
+    std::ostringstream oss;
+    oss << message << "\nThe current value is " << value;
+
+    for (Observer* observer : observers)
     {
-        observer->update(messsage);
+        observer->update(oss.str());
     }
 }
+
+template <typename T>
+void Subject<T>::set_value(const T& value)
+{
+    this->value = value;
+    notify("New Value");
+}
+
+template class Subject<std::string>;
+template class Subject<int>;
